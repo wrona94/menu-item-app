@@ -13,13 +13,13 @@ import {
 
 export default function Home() {
   const [menuItems, setMenuItems] = useState([
-    { name: "Promocje", url: "https://rc32141.redcart.pl/promocje", id: "1" },
+    { name: "Promocje", url: "https://rc32141.redcart.pl/promocje", id: "0" },
     {
       name: "Bestsellery",
       url: "https://rc32141.redcart.pl/Bestsellery",
-      id: "2",
+      id: "1",
     },
-    { name: "Nowości", url: "https://rc32141.redcart.pl/Nowości", id: "3" },
+    { name: "Nowości", url: "https://rc32141.redcart.pl/Nowości", id: "2" },
   ]);
   const getMenuItemsPos = (id) => menuItems.findIndex((item) => item.id === id);
 

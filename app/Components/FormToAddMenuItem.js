@@ -15,7 +15,7 @@ export default function FormToAddMenuItem() {
   } = useForm();
   const onSubmit = (data) => {
     setMenuItems((prev) => {
-      return [...prev, { name: data.name, url: data.link, id: "8" }];
+      return [...prev, { name: data.name, url: data.link, id: prev.length }];
     });
   };
   return (
@@ -42,7 +42,10 @@ export default function FormToAddMenuItem() {
         />
       </div>
       <div className="mt-5">
-        <ItemButton AdditionalClassName="border border-color-[#EAECF0] rounded-lg mr-2">
+        <ItemButton
+          type="button"
+          AdditionalClassName="border border-color-[#EAECF0] rounded-lg mr-2"
+        >
           Anuluj
         </ItemButton>
         <ItemButton AdditionalClassName="border border-color-[#EAECF0] rounded-lg">
