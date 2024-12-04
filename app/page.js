@@ -4,6 +4,12 @@ import ItemButton from "./Components/ItemButton";
 import { useState } from "react";
 import { ItemsContext } from "./Context/ItemsContext";
 import AddMenuItemHeader from "./Components/AddMenuItemHeader";
+import { closestCenter, DndContext } from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 
 export default function Home() {
   const [menuItems, setMenuItems] = useState([
@@ -15,6 +21,20 @@ export default function Home() {
     },
     { name: "Nowości", url: "https://rc32141.redcart.pl/Nowości", id: "3" },
   ]);
+  const getMenuItemsPos = (id) => menuItems.findIndex((item) => item.id === id);
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (active.id === over.id) return;
+
+    setMenuItems((items) => {
+      const originalPos = getMenuItemsPos(active.id);
+      const newPos = getMenuItemsPos(over.id);
+
+      return arrayMove(items, originalPos, newPos);
+    });
+  };
   return (
     <ItemsContext.Provider value={{ menuItems, setMenuItems }}>
       <div
@@ -22,21 +42,21 @@ export default function Home() {
     flex flex-col items-center justify-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] w-[1208px]"
       >
         <AddMenuItemHeader />
-        <ul className="w-full">
-          {menuItems.map((menu) => (
-            <div
-              key={menu.id}
-              className="border b-color-[#D0D5DD] my-9 rounded-lg"
+        <DndContext
+          onDragEnd={handleDragEnd}
+          collisionDetection={closestCenter}
+        >
+          <ul className="w-full">
+            <SortableContext
+              items={menuItems}
+              strategy={verticalListSortingStrategy}
             >
-              <MenuItem menu={menu} />
-              <div className="py-5 px-6">
-                <ItemButton AdditionalClassName="border border-[#D0D5DD] rounded-lg px-3 py-4">
-                  Dodaj pozycje menu
-                </ItemButton>
-              </div>
-            </div>
-          ))}
-        </ul>
+              {menuItems.map((menu) => (
+                <MenuItem menu={menu} key={menu.id} />
+              ))}
+            </SortableContext>
+          </ul>
+        </DndContext>
       </div>
     </ItemsContext.Provider>
   );
