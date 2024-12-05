@@ -1,8 +1,7 @@
 "use client";
-import ItemButton from "./ItemButton";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
-
-import { useContext, useState } from "react";
+import ItemButton from "./ItemButton";
 import { ItemsContext } from "../Context/ItemsContext";
 
 export default function FormToAddMenuItem({ buttonHandler }) {
@@ -10,16 +9,34 @@ export default function FormToAddMenuItem({ buttonHandler }) {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
     reset,
   } = useForm();
+
   const onSubmit = (data) => {
     setMenuItems((prev) => {
-      return [...prev, { name: data.name, url: data.link, id: prev.length }];
+      // const newObject = {
+      //   id: prev.length,
+      //   items: [{ name: data.name, url: data.link, id: prev.length }],
+      // };
+      // const newArray = prev.push(newObject);
+      // return newArray;
+      const newObject = {
+        id: prev.length,
+        items: [{ name: data.name, url: data.link, id: prev.length }],
+      };
+      console.log("prev");
+      console.log(prev);
+      console.log("new object");
+      console.log(newObject);
+      // Zwracamy nową tablicę z dodanym obiektem
+      return [...prev, newObject];
     });
+    console.log("nowa");
+    console.log(menuItems);
     reset();
   };
+
   function onClickHandlerCancelButton() {
     buttonHandler();
   }
