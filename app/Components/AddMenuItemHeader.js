@@ -1,10 +1,10 @@
 import FormToAddMenuItem from "./FormToAddMenuItem";
 import { useState } from "react";
 export default function AddMenuItemHeader() {
-  const [formToAddItemIsOpen, setformToAddItemIsOpen] = useState(false);
+  const [formToAddItemIsOpen, setFormToAddItemIsOpen] = useState(false);
 
   function buttonHandler() {
-    setformToAddItemIsOpen((prev) => !prev);
+    setFormToAddItemIsOpen((prev) => !prev);
   }
 
   return (
@@ -21,7 +21,9 @@ export default function AddMenuItemHeader() {
           Dodaj pozycje menu
         </button>
       </div>
-      <FormToAddMenuItem />
+      {formToAddItemIsOpen && (
+        <FormToAddMenuItem buttonHandler={buttonHandler} />
+      )}
     </div>
   );
 }

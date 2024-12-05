@@ -1,10 +1,18 @@
 "use client";
 import MenuItem from "./Components/MenuItem";
 import ItemButton from "./Components/ItemButton";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { ItemsContext } from "./Context/ItemsContext";
 import AddMenuItemHeader from "./Components/AddMenuItemHeader";
-import { closestCenter, DndContext } from "@dnd-kit/core";
+import {
+  closestCenter,
+  DndContext,
+  KeyboardSensor,
+  MouseSensor,
+  TouchSensor,
+  useSensors,
+  useSensor,
+} from "@dnd-kit/core";
 import {
   arrayMove,
   SortableContext,
@@ -21,6 +29,11 @@ export default function Home() {
     },
     { name: "Nowości", url: "https://rc32141.redcart.pl/Nowości", id: "2" },
   ]);
+  const mouseSensor = useSensor(MouseSensor);
+  const touchSensor = useSensor(TouchSensor);
+  const keyboardSensor = useSensor(KeyboardSensor);
+
+  const sensors = useSensors(mouseSensor, touchSensor, keyboardSensor);
   const getMenuItemsPos = (id) => menuItems.findIndex((item) => item.id === id);
 
   const handleDragEnd = (event) => {
@@ -35,6 +48,7 @@ export default function Home() {
       return arrayMove(items, originalPos, newPos);
     });
   };
+  const id = useId();
   return (
     <ItemsContext.Provider value={{ menuItems, setMenuItems }}>
       <div
@@ -45,6 +59,8 @@ export default function Home() {
         <DndContext
           onDragEnd={handleDragEnd}
           collisionDetection={closestCenter}
+          sensors={sensors}
+          id={id}
         >
           <ul className="w-full">
             <SortableContext
