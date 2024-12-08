@@ -97,8 +97,6 @@ export default function DndContextWrapper() {
   };
 
   const id = useId();
-  console.log("menuitems w dnt context");
-  console.log(menuItems);
 
   return (
     <DndContext

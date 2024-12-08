@@ -5,12 +5,17 @@ import {
 import ItemButton from "./ItemButton";
 
 import MenuItem from "./MenuItem";
+import FormToAddMenuItem from "./FormToAddMenuItem";
+import ItemButtonAddElement from "./ItemButtonAddElement";
+import { useState } from "react";
 
 export default function MenuItemWrapper({ menu }) {
+  const [isFormShown, setIsFormShown] = useState(false);
+  function formShowClickHandler() {
+    setIsFormShown((prev) => !prev);
+  }
   return (
     <SortableContext items={menu.items} strategy={verticalListSortingStrategy}>
-      {console.log("menu itemsssssssssss")}
-      {console.log(menu.items)}
       {menu.items.length > 0 && (
         <li className="border b-color-[#D0D5DD] my-9 rounded-lg">
           {menu.items.map((menuItem) => (
@@ -18,10 +23,11 @@ export default function MenuItemWrapper({ menu }) {
           ))}
 
           <div className="py-5 px-6">
-            <ItemButton AdditionalClassName="border border-[#D0D5DD] rounded-lg px-3 py-4">
+            <ItemButtonAddElement onClickHandler={formShowClickHandler}>
               Dodaj pozycje menu
-            </ItemButton>
+            </ItemButtonAddElement>
           </div>
+          {isFormShown && <FormToAddMenuItem mode={"2"} menuItemId={menu.id} />}
         </li>
       )}
     </SortableContext>

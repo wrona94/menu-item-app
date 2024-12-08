@@ -4,7 +4,11 @@ import { useForm } from "react-hook-form";
 import ItemButton from "./ItemButton";
 import { ItemsContext } from "../Context/ItemsContext";
 
-export default function FormToAddMenuItem({ buttonHandler }) {
+export default function FormToAddMenuItem({
+  buttonHandler,
+  mode = 1,
+  menuItemId,
+}) {
   const { menuItems, setMenuItems } = useContext(ItemsContext);
   const {
     register,
@@ -15,25 +19,29 @@ export default function FormToAddMenuItem({ buttonHandler }) {
 
   const onSubmit = (data) => {
     setMenuItems((prev) => {
-      // const newObject = {
-      //   id: prev.length,
-      //   items: [{ name: data.name, url: data.link, id: prev.length }],
-      // };
-      // const newArray = prev.push(newObject);
-      // return newArray;
-      const newObject = {
-        id: prev.length,
-        items: [{ name: data.name, url: data.link, id: prev.length }],
-      };
-      console.log("prev");
-      console.log(prev);
-      console.log("new object");
-      console.log(newObject);
-      // Zwracamy nową tablicę z dodanym obiektem
-      return [...prev, newObject];
+      if (mode == "1") {
+        const newObject = {
+          id: prev.length,
+          items: [{ name: data.name, url: data.link, id: prev.length }],
+        };
+        return [...prev, newObject];
+      }
+      if (mode == "2") {
+        const newState = [...prev];
+        const newObject = {
+          name: data.name,
+          url: data.link,
+          id: newState[menuItemId].items.length,
+        };
+        newState[menuItemId] = {
+          ...newState[menuItemId],
+          items: [...newState[menuItemId].items, newObject],
+        };
+        return newState;
+      }
+
+      return [...prev];
     });
-    console.log("nowa");
-    console.log(menuItems);
     reset();
   };
 

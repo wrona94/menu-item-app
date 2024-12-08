@@ -22,7 +22,7 @@ export default function AddMenuItemHeader() {
         </button>
       </div>
       {formToAddItemIsOpen && (
-        <FormToAddMenuItem buttonHandler={buttonHandler} />
+        <FormToAddMenuItem buttonHandler={buttonHandler} mode={"1"} />
       )}
     </div>
   );

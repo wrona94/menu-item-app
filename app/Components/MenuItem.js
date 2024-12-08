@@ -22,8 +22,16 @@ export default function MenuItem({ item }) {
     setisEditFieldShown((prev) => !prev);
     if (isEditFieldShown) {
       const newState = [...menuItems];
-      newState[item.id].name = inputNameValue;
-      newState[item.id].url = inputUrlValue;
+      const firstArrayIndex = newState.findIndex((obj) =>
+        obj.items.some((element) => element.id === item.id)
+      );
+      const secondArrayIndex = newState[firstArrayIndex].items.findIndex(
+        (element) => element.id === item.id
+      );
+      if (firstArrayIndex !== -1 && secondArrayIndex !== -1) {
+        newState[firstArrayIndex].items[secondArrayIndex].name = inputNameValue;
+        newState[firstArrayIndex].items[secondArrayIndex].url = inputUrlValue;
+      }
       setMenuItems(newState);
     }
   }
