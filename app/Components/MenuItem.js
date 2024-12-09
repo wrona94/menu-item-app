@@ -7,7 +7,7 @@ import MenuItemData from "./MenuItemData";
 
 import { ItemsContext } from "../Context/ItemsContext";
 
-export default function MenuItem({ item }) {
+export default function MenuItem({ item, openFormHandler }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: item.id });
   const style = {
@@ -38,7 +38,7 @@ export default function MenuItem({ item }) {
   return (
     <div
       key={item.id}
-      className="bg-white py-4 px-6 flex items-center rounded-lg"
+      className="bg-white py-4 px-6 flex flex-wrap items-center rounded-lg gap-2"
       style={style}
       {...attributes}
       ref={setNodeRef}
@@ -57,6 +57,7 @@ export default function MenuItem({ item }) {
         isEditFieldShown={isEditFieldShown}
         menu={item}
         onClickHandlerEditButton={onClickHandlerEditButton}
+        onClickOpenFormHandler={openFormHandler}
       />
     </div>
   );

@@ -6,9 +6,10 @@ export default function ItemButtonsWrapper({
   isEditFieldShown,
   menu,
   onClickHandlerEditButton,
+  onClickOpenFormHandler,
 }) {
   return (
-    <div className="border border-[#D0D5DD] rounded-lg ml-auto">
+    <div className="border border-[#D0D5DD] rounded-lg md:ml-auto">
       <ItemButtonRemove menuId={menu.id}>Usuń</ItemButtonRemove>
 
       <ItemButtonEdit
@@ -18,7 +19,9 @@ export default function ItemButtonsWrapper({
         {isEditFieldShown ? "Zapisz" : "Edytuj"}
       </ItemButtonEdit>
 
-      <ItemButton>Dodaj pozycje menu</ItemButton>
+      <ItemButton onClickHandler={onClickOpenFormHandler}>
+        Dodaj pozycje menu
+      </ItemButton>
     </div>
   );
 }

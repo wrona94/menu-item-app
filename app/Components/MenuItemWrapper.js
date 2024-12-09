@@ -14,12 +14,19 @@ export default function MenuItemWrapper({ menu }) {
   function formShowClickHandler() {
     setIsFormShown((prev) => !prev);
   }
+  function buttonHandler() {
+    setIsFormShown((prev) => !prev);
+  }
   return (
     <SortableContext items={menu.items} strategy={verticalListSortingStrategy}>
       {menu.items.length > 0 && (
         <li className="border b-color-[#D0D5DD] my-9 rounded-lg">
           {menu.items.map((menuItem) => (
-            <MenuItem key={menuItem.id} item={menuItem} />
+            <MenuItem
+              key={menuItem.id}
+              item={menuItem}
+              openFormHandler={formShowClickHandler}
+            />
           ))}
 
           <div className="py-5 px-6">
@@ -27,7 +34,13 @@ export default function MenuItemWrapper({ menu }) {
               Dodaj pozycje menu
             </ItemButtonAddElement>
           </div>
-          {isFormShown && <FormToAddMenuItem mode={"2"} menuItemId={menu.id} />}
+          {isFormShown && (
+            <FormToAddMenuItem
+              mode={"2"}
+              menuItemId={menu.id}
+              buttonHandler={buttonHandler}
+            />
+          )}
         </li>
       )}
     </SortableContext>

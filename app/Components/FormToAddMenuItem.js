@@ -43,6 +43,7 @@ export default function FormToAddMenuItem({
       return [...prev];
     });
     reset();
+    buttonHandler();
   };
 
   function onClickHandlerCancelButton() {
